@@ -1,0 +1,26 @@
+import bpy
+from bpy import context
+from math import sin, cos, radians
+
+cubeobject = bpy.ops.mesh.primitive_cube_add
+
+cursor = context.scene.cursor_location
+
+radialdist = 10.0
+
+xsize = 1.0
+ysize = 0.85
+zsize = 0.5
+theta = 0.0
+twopiover8 = 6.28/8.0
+
+while theta < 6.28:
+    x = cursor.x + radialdist * cos(theta)
+    y = cursor.y + radialdist * sin(theta)
+    z = cursor.z
+    cubeobject(location=(x, y, z,))
+    bpy.ops.object.modifier_add(type='SUBSURF')
+    theta += twopiover8
+
+    bpy.context.object.modifiers["Subsurf"].levels = 2
+
